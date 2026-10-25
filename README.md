@@ -1,182 +1,22 @@
-# Connect Four AI
+# Trí tuệ nhân tạo nâng cao
 
-Đồ án cuối kỳ học phần **Trí tuệ nhân tạo nâng cao**, thực hiện bởi nhóm 4 sinh viên. Phạm vi dự án gồm trò chơi Connect Four cùng **6 tác tử AI cấp 1–6**, giao diện người–máy/máy–máy và hệ thống đánh giá đối kháng.
+Repo nhóm lưu trữ bài thực hành theo tuần và đồ án cuối kỳ **Connect Four AI** của học phần **Trí tuệ nhân tạo nâng cao**. Nội dung được tổ chức để giảng viên và các thành viên theo dõi bài làm, kết quả và lịch sử đóng góp trong cùng một repo.
 
-**Trạng thái: Đang phát triển.**
+**Đồ án cuối kỳ:** [Connect Four AI — phạm vi, phương pháp và thực nghiệm](DuAn/ConnectFour/README.md).
 
 ## Mục lục
 
-- [Mục tiêu](#mục-tiêu)
-- [Luật chơi](#luật-chơi)
-- [Phạm vi dự án](#phạm-vi-dự-án)
-- [Huấn luyện cấp 5 và cấp 6](#huấn-luyện-cấp-5-và-cấp-6)
-- [Chức năng](#chức-năng)
-- [Công nghệ sử dụng](#công-nghệ-sử-dụng)
-- [Cấu trúc dự án](#cấu-trúc-dự-án)
-- [Hướng dẫn chạy](#hướng-dẫn-chạy)
-- [Thiết kế thực nghiệm](#thiết-kế-thực-nghiệm)
-- [Thành viên và phối hợp](#thành-viên-và-phối-hợp)
-- [Sản phẩm bàn giao](#sản-phẩm-bàn-giao)
-- [Tài liệu tham khảo](#tài-liệu-tham-khảo)
+- [Thành viên](#thành-viên)
+- [Nội dung học phần trong repo](#nội-dung-học-phần-trong-repo)
+- [Cấu trúc repo](#cấu-trúc-repo)
+- [Tổ chức bài làm theo tuần](#tổ-chức-bài-làm-theo-tuần)
+- [Đồ án cuối kỳ Connect Four AI](#đồ-án-cuối-kỳ-connect-four-ai)
+- [Công cụ sử dụng](#công-cụ-sử-dụng)
+- [Hướng dẫn sử dụng](#hướng-dẫn-sử-dụng)
+- [Quy ước làm việc và commit](#quy-ước-làm-việc-và-commit)
+- [Nguồn tham khảo](#nguồn-tham-khảo)
 
-## Mục tiêu
-
-- Xây dựng engine đúng luật, có API thống nhất và kiểm thử tự động.
-- Triển khai Random, Heuristic, Minimax/Alpha-Beta và MCTS.
-- Huấn luyện thực tế cả mạng học có giám sát ở cấp 5 và tác tử học tăng cường ở cấp 6.
-- So sánh sức mạnh thi đấu với thời gian suy luận và chi phí huấn luyện.
-- Cung cấp demo chơi được và lưu đủ mã, cấu hình, checkpoint, log để chạy lại thực nghiệm.
-
-Hai câu hỏi nghiên cứu chính:
-
-1. Trong cùng thời gian suy nghĩ mỗi nước, Alpha-Beta và MCTS khác nhau thế nào về điểm đối kháng và độ trễ?
-2. Neural Network học từ Alpha-Beta và tác tử RL đạt sức mạnh, tốc độ suy luận và chi phí huấn luyện ở mức nào so với các tác tử đối chứng?
-
-## Luật chơi
-
-- Bàn tiêu chuẩn có **7 cột × 6 hàng**, dành cho 2 người chơi luân phiên.
-- Mỗi lượt, người chơi thả một quân vào cột chưa đầy. Quân nằm ở ô trống thấp nhất của cột.
-- Người đầu tiên tạo được **4 quân cùng màu liên tiếp** theo hàng ngang, dọc hoặc chéo thắng.
-- Bàn đầy mà chưa có người thắng thì hòa. Ván kết thúc ngay khi xác định thắng hoặc hòa.
-- Không chấp nhận cột đầy, chỉ số cột sai hoặc nước đi sau khi ván đã kết thúc.
-
-Quy ước biểu diễn: hành động là chỉ số cột `0–6`; trạng thái gồm bàn cờ, người đến lượt và thông tin kết thúc. Trò chơi có thông tin đầy đủ, tính xác định và có thể mô hình hóa dưới dạng tổng bằng không.
-
-Giao diện engine được thống nhất gồm `reset()`, `legal_actions()`, `step(action)`, `is_terminal()`, `result()`, `render()` và `clone()` hoặc `undo()`.
-
-## Phạm vi dự án
-
-Phạm vi dự án bao gồm đầy đủ sáu cấp dưới đây.
-
-| Cấp | Tác tử | Phương pháp |
-| --- | --- | --- |
-| 1 | Random | Chọn đều trong các cột hợp lệ, dùng làm mốc đối chứng. |
-| 2 | Rule-based / Heuristic | Ưu tiên thắng ngay, chặn đối thủ rồi đánh giá chuỗi quân và vị trí; công bố thứ tự ưu tiên. |
-| 3 | Minimax / Alpha-Beta | Tìm kiếm giới hạn độ sâu, dùng hàm lượng giá; đối chiếu số nút và thời gian khi bật/tắt cắt tỉa. |
-| 4 | MCTS với UCT | Chọn nút, mở rộng, mô phỏng và cập nhật kết quả; khảo sát ngân sách mô phỏng. |
-| 5 | Neural Network | Học có giám sát để dự đoán nước đi từ nhãn Alpha-Beta. |
-| 6 | Reinforcement Learning | Dùng policy gradient REINFORCE để học từ tương tác và phần thưởng cuối ván. |
-
-**Cấp 1–6 thuộc phạm vi chính.** Kết hợp mạng với MCTS hoặc thực hiện các cấp cảm hứng AlphaGo/AlphaZero là hướng mở rộng sau khi hoàn thành phần chính. Cấp phương pháp cao hơn không mặc nhiên bảo đảm tác tử chơi mạnh hơn.
-
-## Huấn luyện cấp 5 và cấp 6
-
-### Cấp 5 — Học có giám sát
-
-- Sinh các ván hợp lệ, dùng Alpha-Beta có cấu hình công bố rõ để tạo nhãn nước đi.
-- Mạng policy nhận trạng thái và người đến lượt, dự đoán hành động trên 7 cột.
-- Chia train/validation/test **theo ván** với tỷ lệ khởi đầu `80/10/10`; kiểm soát trạng thái trùng giữa các tập và ghi lại tỷ lệ thực tế sau lọc.
-- Chỉ tăng cường đối xứng trong train; khi lật gương bàn phải đổi nhãn cột tương ứng.
-- Chọn checkpoint bằng validation; báo cáo loss, kết quả test và sức mạnh đối đầu.
-
-Nhãn từ Alpha-Beta giới hạn độ sâu phản ánh tác tử tạo nhãn, không được mặc định là nước tối ưu toán học.
-
-### Cấp 6 — Học tăng cường
-
-- Khởi tạo mạng policy riêng và huấn luyện bằng **REINFORCE**.
-- Mỗi episode là một ván. Thưởng cuối ván theo góc nhìn tác tử đang học: **thắng `+1`, hòa `0`, thua `−1`**.
-- Trong huấn luyện, lấy mẫu hành động từ policy trên các cột hợp lệ để khám phá.
-- Bắt đầu đối đầu với Random/Heuristic cố định; sau đó thử đối đầu với checkpoint đóng băng của chính tác tử để hỗ trợ self-play. Chỉ cập nhật tác tử đang học.
-- Chọn checkpoint bằng đánh giá định kỳ trên tập đối thủ và seed phát triển cố định.
-- Lưu số episode, phần thưởng, cách khám phá, siêu tham số, đối thủ, thời gian huấn luyện và đường cong reward/điểm đối kháng.
-
-Hai cấp có thể dùng chung kiến trúc nhưng phải có **trọng số, checkpoint và log huấn luyện riêng**. Khi chọn nước, cả hai phải loại cột đầy. Không dùng mạng chưa huấn luyện để minh chứng hoàn thành cấp 5 hoặc 6; không dùng bộ đánh giá cuối để chọn mô hình hoặc siêu tham số.
-
-## Chức năng
-
-| Chức năng | Nội dung |
-| --- | --- |
-| Quản lý ván chơi | Khởi tạo bàn, kiểm tra nước đi, cập nhật lượt và xác định kết quả. |
-| Chọn tác tử | Chọn một trong 6 tác tử và cấu hình tìm kiếm hoặc checkpoint. |
-| Demo | Người đấu máy và máy đấu máy; hiển thị bàn, lượt, kết quả và thời gian mỗi nước. |
-| Huấn luyện | Sinh dữ liệu cấp 5, huấn luyện NN/RL, lưu checkpoint và lịch sử học. |
-| Đánh giá tự động | Đấu vòng tròn, ghi log và tổng hợp bảng/biểu đồ. |
-
-## Công nghệ sử dụng
-
-Các công cụ nhóm đã thống nhất cho việc triển khai:
-
-| Công cụ | Vai trò |
-| --- | --- |
-| Python, NumPy | Engine, xử lý trạng thái và các thuật toán. |
-| Pygame | Giao diện chơi và demo trên máy cá nhân. |
-| PyTorch | Huấn luyện và suy luận cho NN/RL. |
-| pytest | Kiểm thử luật, trạng thái và hành động hợp lệ. |
-| pandas, Matplotlib | Phân tích log, ma trận đối đầu và đường cong học. |
-| GitHub | Quản lý mã nguồn, phân công và lịch sử đóng góp. |
-| Google Colab, tùy chọn | Hỗ trợ notebook huấn luyện khi cần tài nguyên bổ sung. |
-
-Máy cá nhân là môi trường chính cho phát triển, demo và đánh giá. Nếu huấn luyện trên Colab, cần lưu checkpoint ra nơi bền vững và công bố phần cứng thực dùng. Các tác tử trong cùng phép so sánh phải chạy trong điều kiện phần cứng được kiểm soát.
-
-Phiên bản Python và thư viện phải được ghi trong cấu hình môi trường để bảo đảm các thành viên có thể cài đặt và chạy lại cùng thiết lập.
-
-## Cấu trúc dự án
-
-Cấu trúc dưới đây quy định cách tổ chức mã, dữ liệu và kết quả của dự án.
-
-```text
-connect-four-ai/
-├── README.md
-├── .gitignore
-├── requirements.txt          # Thư viện và phiên bản
-├── configs/                  # Cấu hình tác tử, train và giải đấu
-├── src/
-│   └── connect_four/
-│       ├── game/             # Luật, trạng thái và API engine
-│       ├── agents/           # Sáu tác tử cùng giao diện chọn nước
-│       ├── ui/               # Demo Pygame
-│       ├── training/         # Sinh nhãn, huấn luyện NN và RL
-│       └── evaluation/       # Runner giải đấu và các độ đo
-├── tests/                    # Kiểm thử engine và tác tử
-├── notebooks/                # Phân tích, biểu đồ và notebook huấn luyện
-├── data/                     # Dữ liệu tự sinh, mô tả và cách chia tập
-├── checkpoints/              # Trọng số NN và RL được chọn
-├── results/                  # Log thô, bảng và hình thực nghiệm
-└── docs/                     # Proposal, báo cáo, slide và poster
-```
-
-Dữ liệu và checkpoint lớn cần có hướng dẫn tải hoặc tái tạo nếu không lưu trực tiếp trong Git. Mô tả dữ liệu, cấu hình, seed và cách chạy lại vẫn phải được cung cấp. Kiểm tra `.gitignore` để không bỏ qua nhầm các log hoặc kết quả cần nộp.
-
-## Hướng dẫn chạy
-
-Repo hiện có `README.md` và `.gitignore`; chưa có mã nguồn, tệp cài đặt thư viện hoặc chương trình chạy demo, huấn luyện và đánh giá.
-
-**Chưa có lệnh chạy ứng dụng được kiểm chứng để công bố.** Phần này sẽ được cập nhật cùng mã nguồn, chỉ bao gồm các bước cài đặt, kiểm thử, demo, train và evaluate đã được chạy kiểm tra trên môi trường được ghi rõ.
-
-## Thiết kế thực nghiệm
-
-### Giải đấu
-
-- Đấu vòng tròn giữa **6 tác tử**, tương ứng **15 cặp**.
-- Mỗi chế độ có tối thiểu **100 ván/cặp**, mục tiêu **200 ván/cặp**; chia đều đi trước/đi sau.
-- Dùng nhiều seed cho phương pháp có tính ngẫu nhiên, công bố cách phân bổ ván.
-- Chạy ít nhất hai chế độ: **cùng trần thời gian mỗi nước** và **cấu hình mặc định minh bạch**.
-- Với mục tiêu 200 ván/cặp, mỗi chế độ có **3.000 ván**; hai chế độ có **6.000 ván**, chưa gồm khảo sát bổ sung.
-- Giữ cố định luật, phiên bản mã, phần cứng và thiết bị suy luận; công bố cách xử lý nước sai hoặc quá thời gian. Không suy diễn công bằng tính toán chỉ từ cùng độ sâu tìm kiếm.
-
-### Các chỉ số
-
-- Số lượng và tỷ lệ thắng/hòa/thua.
-- `score = (số thắng + 0.5 × số hòa) / tổng số ván`.
-- Thời gian trung bình và p95 mỗi nước.
-- Số nút duyệt hoặc số mô phỏng; RAM/VRAM khi phù hợp.
-- Thời gian huấn luyện, loss của NN, reward và điểm đối kháng theo episode của RL.
-- Ma trận đối đầu, khoảng tin cậy và kết quả tách theo bên đi trước/đi sau.
-
-### Hai khảo sát chính
-
-1. **Alpha-Beta bật/tắt cắt tỉa:** giữ cùng trạng thái, độ sâu, hàm lượng giá và thứ tự nước; so sánh kết quả tìm kiếm, số nút và thời gian.
-2. **Ngân sách MCTS:** thay số mô phỏng trong khi cố định đối thủ, chính sách rollout và cách sử dụng seed; đo thay đổi score và độ trễ.
-
-Phân tích thêm ảnh hưởng seed, độ sâu, lượt đi trước và những thế cờ tác tử mắc lỗi. Với cặp tác tử tất định, không coi các ván lặp y hệt là mẫu độc lập để làm hẹp khoảng tin cậy.
-
-### Lưu trữ để tái lập
-
-Mỗi đợt chạy cần lưu phiên bản mã/commit, luật, cấu hình, seed, phần cứng và checkpoint sử dụng. Log ván gồm đối thủ, bên đi trước, chuỗi nước và kết quả; log từng nước có thời gian cùng số nút hoặc mô phỏng khi áp dụng. Notebook phải tạo lại được bảng/hình từ log thô.
-
-**Chưa có kết quả thực nghiệm trong repo.** Các bảng xếp hạng và kết luận sẽ chỉ được bổ sung sau khi chạy và kiểm tra thực tế.
-
-## Thành viên và phối hợp
+## Thành viên
 
 | Thành viên | Mã sinh viên |
 | --- | --- |
@@ -185,27 +25,115 @@ Mỗi đợt chạy cần lưu phiên bản mã/commit, luật, cấu hình, see
 | Phạm Thái Duy Khang | 3124720033 |
 | Bùi Anh Đức | 3124720016 |
 
-Nhóm thống nhất người phụ trách các mảng engine/UI, tác tử tìm kiếm, MCTS/giải đấu và NN/RL. Phần RL cần phối hợp giữa người phụ trách vòng lặp đối đầu và người phụ trách mạng, huấn luyện. Bảng phân công theo tên và tỷ lệ đóng góp sẽ cập nhật theo công việc thực tế.
+Phân công và đóng góp được ghi trong README của từng tuần hoặc từng phần công việc, kèm lịch sử commit và pull request tương ứng.
 
-Mỗi công việc nên được ghi thành issue, thực hiện trên nhánh riêng và review qua pull request trước khi gộp vào `main`. Mỗi thành viên dùng tài khoản của mình để lưu lịch sử đóng góp.
+## Nội dung học phần trong repo
 
-## Sản phẩm bàn giao
+- **Bài thực hành:** mã nguồn hoặc notebook, kết quả chạy và nhận xét của từng lab.
+- **Đồ án cuối kỳ:** engine Connect Four, các tác tử AI, giao diện, huấn luyện, thực nghiệm và tài liệu báo cáo.
 
-- Demo cho phép chọn tác tử và chơi người–máy/máy–máy.
-- Mã nguồn Python, cấu hình, yêu cầu thư viện, test tự động và hướng dẫn cài đặt/train/evaluate/demo.
-- Thông tin dữ liệu NN; checkpoint riêng của cấp 5 và 6; log và đường cong huấn luyện.
-- Log thi đấu thô, notebook tạo bảng/hình, ma trận đối đầu và phân tích.
-- Báo cáo, slide, poster; liên kết GitHub, lịch sử commit, phân công và tỷ lệ đóng góp.
-- Tệp ZIP đặt tên theo quy định: `NhomXX_TenGame_TTNTNC_HoTen_MaSV.zip`.
+Các chủ đề của bốn lab đầu:
 
-Nguồn sách, thư viện, công cụ AI và mã tham khảo phải được trích dẫn; phân biệt phần tự cài đặt với phần kế thừa. Không báo cáo training/benchmark chưa chạy hoặc chỉ chọn ván thắng để minh họa kết luận tổng thể.
+| Lab | Chủ đề | Bài toán trong tài liệu thực hành |
+| --- | --- | --- |
+| Lab 01 | Intelligent Agents | Robot hút bụi, Lunar Lander và Gridhunt. |
+| Lab 02 | Problem Solving by Search | Tìm đường trong mê cung; tìm kiếm và so sánh cách duyệt trạng thái. |
+| Lab 03 | Local Search | Bài toán N-Queens và người du lịch (TSP). |
+| Lab 04 | Constraint Satisfaction Problems | Tô màu đồ thị và bài toán thỏa mãn ràng buộc. |
 
-## Tài liệu tham khảo
+Bài làm, phạm vi đã thực hiện và kết quả của từng lab được ghi trong README của tuần tương ứng.
 
-1. Đề tài cuối kỳ môn Trí tuệ nhân tạo nâng cao, chủ đề *Xây dựng và đánh giá Game AI đa cấp độ*.
-2. Tài liệu học phần về tìm kiếm có đối thủ, Minimax, Alpha-Beta và MCTS.
-3. Mark Liu (2025). *Rule-Based AI*, Phần I, chương 1–8, trích từ *AlphaGo Simplified: Rule-Based AI and Deep Learning in Everyday Games*. CRC Press. Bản trích nhóm sử dụng: `Liu - Rule-Based AI Games.pdf`.
-4. Mark Liu (2025). *AlphaGo Simplified: Rule-Based AI and Deep Learning in Everyday Games*. CRC Press. [DOI: 10.1201/9781032722207](https://doi.org/10.1201/9781032722207).
-5. Stuart J. Russell và Peter Norvig (2022). *Artificial Intelligence: A Modern Approach*, Fourth Edition, Global Edition. Pearson Education Limited.
+## Cấu trúc repo
 
-Thông tin năm và ấn bản theo các bản sách nhóm đang sử dụng. Các nguồn mã và thư viện cụ thể sẽ được bổ sung khi triển khai.
+Quy ước tổ chức dùng chung cho cả nhóm; các thư mục tuần được bổ sung cùng bài làm thực tế.
+
+```text
+.
+├── README.md                       # Giới thiệu và điều hướng toàn bộ repo
+├── .gitignore                      # Quy tắc bỏ qua tệp dùng chung
+├── Tuan01/
+│   ├── README.md                   # Nội dung, phân công, cách chạy và nhận xét
+│   └── LabXX/                      # Mã nguồn, notebook và kết quả của lab
+├── Tuan02/
+├── Tuan03/
+├── Tuan04/
+├── ...
+├── Tuan09/
+└── DuAn/
+    └── ConnectFour/
+        ├── README.md               # Tài liệu riêng của đồ án cuối kỳ
+        └── ...                     # Cấu trúc chi tiết trong README đồ án
+```
+
+Tên `Tuan01`, `Tuan02`, ... phản ánh **tuần học thực tế** theo lịch của giảng viên; số lab không bắt buộc trùng số tuần. `LabXX` trong sơ đồ được thay bằng mã lab tương ứng. Đồ án được lưu tập trung tại `DuAn/ConnectFour/` để các tuần cùng cập nhật một bộ mã nguồn.
+
+## Tổ chức bài làm theo tuần
+
+README của mỗi tuần ghi rõ:
+
+1. **Nội dung được giao:** bài thực hành hoặc yêu cầu bổ sung của giảng viên.
+2. **Bài làm:** đường dẫn đến mã nguồn, notebook và báo cáo thực hành trong thư mục tuần.
+3. **Cách chạy:** môi trường, thư viện và các bước đã được nhóm kiểm tra.
+4. **Kết quả và nhận xét:** đầu ra thực tế, giải thích kết quả và vấn đề còn gặp.
+5. **Phân công:** phần việc thực tế của từng thành viên; dẫn tới commit hoặc pull request khi phù hợp.
+
+Với notebook, lưu đầu ra cần thiết để đọc được kết quả. Các bảng, biểu đồ và kết luận phải có dữ liệu hoặc lần chạy tương ứng. Giữ lại thông tin tác giả và giấy phép của mã/tài liệu được cung cấp, đồng thời phân biệt phần tham khảo với phần nhóm tự thực hiện.
+
+## Đồ án cuối kỳ Connect Four AI
+
+**Đề tài:** Xây dựng và đánh giá Game AI đa cấp độ cho trò chơi Connect Four.
+
+Xem [README Connect Four](DuAn/ConnectFour/README.md) để biết phạm vi, phương pháp, cấu trúc dự án, hướng dẫn chạy và thiết kế thực nghiệm.
+
+## Công cụ sử dụng
+
+| Công cụ | Mục đích |
+| --- | --- |
+| Python, NumPy | Bài thực hành, xử lý dữ liệu và thuật toán AI. |
+| Jupyter Notebook | Trình bày bài thực hành, kết quả và phân tích. |
+| Pygame | Giao diện demo Connect Four. |
+| PyTorch | Mạng học có giám sát và học tăng cường của đồ án. |
+| pytest | Kiểm thử engine và hành động hợp lệ. |
+| pandas, Matplotlib | Tổng hợp kết quả và vẽ biểu đồ. |
+| Git, GitHub | Quản lý phiên bản, phối hợp và lưu lịch sử đóng góp. |
+| Google Colab, tùy chọn | Chạy notebook và hỗ trợ huấn luyện khi cần thêm tài nguyên. |
+
+Các thư viện chuyên biệt của từng lab được ghi trong tài liệu môi trường của lab đó. Máy cá nhân là môi trường chính cho phát triển, demo và đánh giá Connect Four; thông tin phần cứng và môi trường huấn luyện được công bố cùng thực nghiệm.
+
+## Hướng dẫn sử dụng
+
+- **Bài theo tuần:** mở thư mục `TuanXX` tương ứng và đọc README của tuần để tìm bài làm và hướng dẫn chạy.
+- **Đồ án cuối kỳ:** đọc [hướng dẫn Connect Four](DuAn/ConnectFour/README.md#hướng-dẫn-chạy).
+- **Môi trường chạy:** từng lab và đồ án ghi riêng các thư viện cần thiết; chỉ công bố lệnh đã được kiểm tra với mã nguồn đi kèm.
+
+Repo chưa có một lệnh chạy chung cho toàn bộ học phần. Hướng dẫn chạy từng phần được bổ sung cùng mã và cấu hình môi trường của phần đó.
+
+## Quy ước làm việc và commit
+
+Mỗi thành viên dùng tài khoản GitHub riêng. Nội dung commit cần chỉ rõ **tuần / lab hoặc đồ án / công việc đã thực hiện**, theo yêu cầu của giảng viên:
+
+```text
+TuanXX/LabXX/Noi dung cong viec
+TuanXX/DuAn/Noi dung cong viec
+```
+
+Ví dụ cách đặt thông điệp:
+
+```text
+Tuan01/Lab01/Bo sung bai Agent va ket qua chay
+Tuan02/Lab02/Sua kiem tra trang thai lap khi tim duong
+Tuan03/Lab03/Sua cach tinh so cap hau xung dot
+Tuan04/DuAn/Cai dat kiem tra thang Connect Four
+```
+
+Thay số tuần và số lab theo công việc thực tế. Mỗi commit tập trung vào một thay đổi rõ ràng. Với bài được đưa lên bổ sung sau tuần học, ghi đúng tuần của bài và giữ thời gian commit thực tế; không suy diễn thời điểm làm bài chỉ từ thời điểm tải lên.
+
+Với thay đổi cần phối hợp, nhóm sử dụng issue, nhánh công việc và pull request để trao đổi, kiểm tra trước khi gộp vào nhánh chính. Phân công trong README phản ánh đóng góp thực tế, kể cả phần đã làm trước khi đưa lên GitHub.
+
+## Nguồn tham khảo
+
+- Đề bài, bài giảng và tài liệu thực hành do giảng viên cung cấp.
+- Tác giả, nguồn mã và giấy phép được ghi tại từng bài thực hành.
+- Sách và tài liệu nghiên cứu cho đồ án được liệt kê trong [tài liệu tham khảo Connect Four](DuAn/ConnectFour/README.md#tài-liệu-tham-khảo).
+
+Nhóm chịu trách nhiệm hiểu, kiểm tra và giải thích bài làm. Khi sử dụng mã, tài liệu hoặc công cụ AI để hỗ trợ, ghi nhận nguồn theo yêu cầu học phần và trình bày rõ phần nhóm tự thực hiện.
