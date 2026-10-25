@@ -2,7 +2,7 @@
 
 Repo nhóm lưu trữ bài thực hành theo tuần và đồ án cuối kỳ **Connect Four AI** của học phần **Trí tuệ nhân tạo nâng cao**. Nội dung được tổ chức để giảng viên và các thành viên theo dõi bài làm, kết quả và lịch sử đóng góp trong cùng một repo.
 
-**Đồ án cuối kỳ:** [Connect Four AI — phạm vi, phương pháp và thực nghiệm](DuAn/ConnectFour/README.md).
+**Đồ án cuối kỳ:** [Connect Four AI — phạm vi, phương pháp và thực nghiệm](ConnectFour/README.md).
 
 ## Mục lục
 
@@ -58,14 +58,12 @@ Quy ước tổ chức dùng chung cho cả nhóm; các thư mục tuần đư�
 ├── Tuan03/
 ├── Tuan04/
 ├── ...
-├── Tuan09/
-└── DuAn/
-    └── ConnectFour/
+├── Tuan12/
+└── ConnectFour/
         ├── README.md               # Tài liệu riêng của đồ án cuối kỳ
         └── ...                     # Cấu trúc chi tiết trong README đồ án
 ```
 
-Tên `Tuan01`, `Tuan02`, ... phản ánh **tuần học thực tế** theo lịch của giảng viên; số lab không bắt buộc trùng số tuần. `LabXX` trong sơ đồ được thay bằng mã lab tương ứng. Đồ án được lưu tập trung tại `DuAn/ConnectFour/` để các tuần cùng cập nhật một bộ mã nguồn.
 
 ## Tổ chức bài làm theo tuần
 
@@ -100,13 +98,7 @@ Xem [README Connect Four](DuAn/ConnectFour/README.md) để biết phạm vi, ph
 
 Các thư viện chuyên biệt của từng lab được ghi trong tài liệu môi trường của lab đó. Máy cá nhân là môi trường chính cho phát triển, demo và đánh giá Connect Four; thông tin phần cứng và môi trường huấn luyện được công bố cùng thực nghiệm.
 
-## Hướng dẫn sử dụng
 
-- **Bài theo tuần:** mở thư mục `TuanXX` tương ứng và đọc README của tuần để tìm bài làm và hướng dẫn chạy.
-- **Đồ án cuối kỳ:** đọc [hướng dẫn Connect Four](DuAn/ConnectFour/README.md#hướng-dẫn-chạy).
-- **Môi trường chạy:** từng lab và đồ án ghi riêng các thư viện cần thiết; chỉ công bố lệnh đã được kiểm tra với mã nguồn đi kèm.
-
-Repo chưa có một lệnh chạy chung cho toàn bộ học phần. Hướng dẫn chạy từng phần được bổ sung cùng mã và cấu hình môi trường của phần đó.
 
 ## Quy ước làm việc và commit
 
