@@ -1,6 +1,6 @@
 # Connect Four AI
 
-[← Về README môn học](../../README.md)
+[← Về README môn học](../README.md)
 
 Đồ án cuối kỳ học phần **Trí tuệ nhân tạo nâng cao**, thực hiện bởi nhóm 4 sinh viên. Phạm vi dự án gồm trò chơi Connect Four cùng **6 tác tử AI cấp 1–6**, giao diện người–máy/máy–máy và hệ thống đánh giá đối kháng.
 
@@ -114,10 +114,10 @@ Phiên bản Python và thư viện phải được ghi trong cấu hình môi t
 
 ## Cấu trúc dự án
 
-Đồ án nằm trong thư mục `DuAn/ConnectFour/` của repo môn học. Cấu trúc dưới đây quy định cách tổ chức mã, dữ liệu và kết quả; các thư mục và tệp được bổ sung khi triển khai từng phần.
+Đồ án nằm trong thư mục `Connect_Four/` của repo môn học. Cấu trúc dưới đây quy định cách tổ chức mã, dữ liệu và kết quả; các thư mục và tệp được bổ sung khi triển khai từng phần.
 
 ```text
-DuAn/ConnectFour/
+Connect_Four/
 ├── README.md
 ├── requirements.txt          # Thư viện và phiên bản
 ├── configs/                  # Cấu hình tác tử, train và giải đấu

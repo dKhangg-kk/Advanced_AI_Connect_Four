@@ -2,7 +2,7 @@
 
 Repo nhóm lưu trữ bài thực hành theo tuần và đồ án cuối kỳ **Connect Four AI** của học phần **Trí tuệ nhân tạo nâng cao**. Nội dung được tổ chức để giảng viên và các thành viên theo dõi bài làm, kết quả và lịch sử đóng góp trong cùng một repo.
 
-**Đồ án cuối kỳ:** [Connect Four AI — phạm vi, phương pháp và thực nghiệm](ConnectFour/README.md).
+**Đồ án cuối kỳ:** [Connect Four AI — phạm vi, phương pháp và thực nghiệm](Connect_Four/README.md).
 
 ## Mục lục
 
@@ -59,7 +59,7 @@ Quy ước tổ chức dùng chung cho cả nhóm; các thư mục tuần đư�
 ├── Tuan04/
 ├── ...
 ├── Tuan12/
-└── ConnectFour/
+└── Connect_Four/
         ├── README.md               # Tài liệu riêng của đồ án cuối kỳ
         └── ...                     # Cấu trúc chi tiết trong README đồ án
 ```
@@ -81,7 +81,7 @@ Với notebook, lưu đầu ra cần thiết để đọc được kết quả. 
 
 **Đề tài:** Xây dựng và đánh giá Game AI đa cấp độ cho trò chơi Connect Four.
 
-Xem [README Connect Four](DuAn/ConnectFour/README.md) để biết phạm vi, phương pháp, cấu trúc dự án, hướng dẫn chạy và thiết kế thực nghiệm.
+Xem [README Connect Four](Connect_Four/README.md) để biết phạm vi, phương pháp, cấu trúc dự án, hướng dẫn chạy và thiết kế thực nghiệm.
 
 ## Công cụ sử dụng
 
@@ -126,6 +126,6 @@ Với thay đổi cần phối hợp, nhóm sử dụng issue, nhánh công vi�
 
 - Đề bài, bài giảng và tài liệu thực hành do giảng viên cung cấp.
 - Tác giả, nguồn mã và giấy phép được ghi tại từng bài thực hành.
-- Sách và tài liệu nghiên cứu cho đồ án được liệt kê trong [tài liệu tham khảo Connect Four](DuAn/ConnectFour/README.md#tài-liệu-tham-khảo).
+- Sách và tài liệu nghiên cứu cho đồ án được liệt kê trong [tài liệu tham khảo Connect Four](Connect_Four/README.md#tài-liệu-tham-khảo).
 
 Nhóm chịu trách nhiệm hiểu, kiểm tra và giải thích bài làm. Khi sử dụng mã, tài liệu hoặc công cụ AI để hỗ trợ, ghi nhận nguồn theo yêu cầu học phần và trình bày rõ phần nhóm tự thực hiện.
