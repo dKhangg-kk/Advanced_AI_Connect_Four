@@ -17,7 +17,7 @@
 |---|---|---|---|
 | [`CSP_graph_coloring_example.ipynb`](CSP_graph_coloring_example.ipynb) | Notebook | Backtracking + MRV/LCV/FC + min-conflicts; thí nghiệm n=10–25 | Đủ task; chạy lại thành công |
 | [`n_queens.ipynb`](n_queens.ipynb) | Notebook | HC, SA, random restart, Advanced; so sánh theo n | Đủ task; chạy lại thành công |
-| [`baocao(lab04).docx`](baocao(lab04).docx) | Báo cáo | Báo cáo thực hành lab 04 | — |
+| [`lab04.docx`](lab04.docx) | Báo cáo | Báo cáo thực hành lab 04 | — |
 
 
 ## 3. Cách chạy
@@ -86,7 +86,8 @@ jupyter notebook
 ## 5. Phân công
 
 | Thành viên | Phần việc thực tế |
-|---|---|
-| Bùi Quyền Kiệt | Tổng hợp, viết báo cáo (`baocao(lab04).docx`) |
-| Phan Lê Ngọc Như Ý| Cài đặt backtracking + heuristic + min-conflicts; thí nghiệm; assert kiểm tra |
+
+
+| Phan Lê Ngọc Như Ý, Bùi Quyền Kiệt| Cài đặt backtracking + heuristic + min-conflicts; thí nghiệm; assert kiểm tra |
+
 | Phạm Thái Duy Khang, Bùi Anh Đức | Cài đặt HC/SA, Task 6 so sánh mở rộng, Advanced 4 toán tử |

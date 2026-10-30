@@ -19,7 +19,7 @@
 | [`gridhunt_mini_assignment_completed.ipynb`](gridhunt_mini_assignment_completed.ipynb) | Notebook | GridHunt đơn agent — model-based, random, teleport |
 | [`gridhunt_multiagent_mini_assignment.ipynb`](gridhunt_multiagent_mini_assignment.ipynb) | Notebook | GridHunt đa agent — greedy hunter vs random |
 | [`lunar_lander-2.ipynb`](lunar_lander-2.ipynb) | Notebook | Reflex agent điều khiển Lunar Lander (Gymnasium) |
-| [`baocao.docx`](baocao.docx) | Báo cáo | Báo cáo thực hành lab 01 |
+| [`lab01.docx`](baocao.docx) | Báo cáo | Báo cáo thực hành lab 01 |
 
 
 ## 3. Cách chạy
@@ -97,9 +97,13 @@ pip install gymnasium-display-recorder
 > Tên thành viên thực hiện từng notebook được ghi trong cell đầu của mỗi file (xem chi tiết bên dưới).
 
 | Thành viên | Phần việc thực tế |
+
 | Bùi Kiệt | Cài đặt model-based agent GridHunt đơn agent, thí nghiệm, kết luận |
+
 | Phan Lê Ngọc Như Ý | Cài đặt greedy hunter, thí nghiệm đa agent |
+
 | Phạm Thái Duy Khang | Agent cải tiến Lunar Lander, đánh giá 100 episode |
+
 | Bùi Anh Đức | Môi trường, simple/model-based agent, nghiên cứu so sánh |
 
 

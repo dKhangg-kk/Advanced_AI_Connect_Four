@@ -78,9 +78,9 @@ jupyter notebook
 ## 5. Phân công
 
 | Thành viên | Phần việc thực tế |
-|---|---|
-| Phan Lê Ngọc Như Ý | Tổng hợp, nộp bài, viết báo cáo (`baocao.docx`) |
+
 | Phạm Thái Duy Khang, Bùi Anh Đức | Cài đặt 3 biến thể HC, SA, random restart; Task 6 so sánh; Advanced 4 toán tử |
-| Bùi Quyền Kiệt | Cài đặt 5 thuật toán TSP, so sánh scalability, phân tích, bonus GA |
+
+| Bùi Quyền Kiệt, Phan Lê Ngọc Như Ý | Cài đặt 5 thuật toán TSP, so sánh scalability, phân tích, bonus GA |
 
 

@@ -21,7 +21,7 @@ Giải mê cung bằng các thuật toán tìm kiếm:
 | [`Ex1_Maze_completed.ipynb`](Ex1_Maze_completed.ipynb) | Notebook | Cài đặt đầy đủ BFS, DFS, GBFS, A\*; bảng so sánh 8 maze; trực quan hóa lời giải; phần Advanced IDS & Multiple Goals | **Hoàn thành 100%** |
 | [`Ex2_Maze_simplified.ipynb`](Ex2_Maze_simplified.ipynb) | Notebook | Phiên bản rút gọn — BFS, định nghĩa bài toán, ước lượng d,m,b, thực nghiệm 4 maze và thảo luận độ phức tạp | **Hoàn thành 100%** |
 | [`Ex3_Show_all_mazes.ipynb`](Ex3_Show_all_mazes.ipynb) | Notebook | Hiển thị 8 maze mẫu bằng `maze_helper` | Đã có `maze_helper.py` và đầy đủ 8 file `.txt`, chạy thành công |
-| [`baocao.docx`](baocao.docx) | Báo cáo | Báo cáo thực hành lab 02 | Đã có |
+| [`lab02.docx`](baocao.docx) | Báo cáo | Báo cáo thực hành lab 02 | Đã có |
 
 
 ## 3. Cách chạy
@@ -92,8 +92,12 @@ Thứ tự chạy đề xuất:
 ## 5. Phân công
 
 | Thành viên | MSSV | Phần việc thực tế |
-|---|---|---|
+
+
 | Phan Lê Ngọc Như Ý | 3124720079 | Tổng hợp, hoàn thiện `Ex2_Maze_simplified.ipynb` (BFS, phân tích độ phức tạp, thực nghiệm 4 maze), báo cáo `baocao.docx` |
+
 | Bùi Anh Đức | 3124720016 | Cài đặt và thực nghiệm 4 thuật toán trong `Ex1_Maze_completed.ipynb`, trực quan hóa lời giải, `Ex3_Show_all_mazes.ipynb` |
+
 | Phạm Thái Duy Khang | 3124720033 | Cài đặt và phân tích DFS, Cycle Checking, Advanced IDS trên toàn bộ mê cung |
+
 | Bùi Quyền Kiệt | 3124720036 | Cài đặt A*, thực nghiệm Multiple Goals trên Medium Maze và so sánh tính tối ưu |
