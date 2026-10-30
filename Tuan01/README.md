@@ -93,10 +93,8 @@ pip install gymnasium-display-recorder
 
 ## 5. Phân công
 
-> Thư mục nộp mang tên **Phan Lê Ngọc Như Ý (3124720079)**.  
-> Tên thành viên thực hiện từng notebook được ghi trong cell đầu của mỗi file (xem chi tiết bên dưới).
-
 | Thành viên | Phần việc thực tế |
+
 
 | Bùi Kiệt | Cài đặt model-based agent GridHunt đơn agent, thí nghiệm, kết luận |
 
